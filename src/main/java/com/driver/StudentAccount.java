@@ -2,9 +2,9 @@ package com.driver;
 
 public class StudentAccount extends BankAccount{
 
-    String  institutionName;
+   private String  institutionName;
     double balance;
-    String getInstitutionName;
+   private String getInstitutionName;
 
     public StudentAccount(String name, double balance, String  institutionName) {
         //minimum balance is 0 by default
