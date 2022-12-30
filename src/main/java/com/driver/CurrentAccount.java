@@ -46,14 +46,8 @@ public class CurrentAccount extends BankAccount{
 //            this.tradeLicenseId = tradeLicenseId;
 //        }
 
-        boolean valid = true;
-        for (int i = 0; i < tradeLicenseId.length() - 1; i++) {
-            if (tradeLicenseId.charAt(i) == tradeLicenseId.charAt(i + 1)) {
-                valid = false;
-                break;
-            }
-        }
-        if (!valid) {
+
+        if (!isNumberValid(tradeLicenseId)) {
             String newId = newLId(tradeLicenseId);
             if(newId == ""){
                 throw new Exception("Valid License can not be generated");
@@ -62,6 +56,14 @@ public class CurrentAccount extends BankAccount{
                 this.tradeLicenseId = newId;
             }
         }
+    }
+    public boolean isNumberValid(String licenseId){
+        for(int i = 0; i < licenseId.length()-1; i++){
+            if(licenseId.charAt(i) == licenseId.charAt(i+1)){
+                return false;
+            }
+        }
+        return true;
     }
     public String newLId(String S)
     {
