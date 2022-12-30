@@ -1,5 +1,7 @@
 package com.driver;
 import java.util.Arrays;
+import java.util.*;
+
 public class CurrentAccount extends BankAccount{
        String tradeLicenseId; //consists of Uppercase English characters only
 
@@ -29,26 +31,82 @@ public class CurrentAccount extends BankAccount{
                 break;
             }
         }
-        if (!valid) {
+        if (!valid)
+        {
+            String s=rearrangeLicenseId();
 
-            char[] chars = tradeLicenseId.toCharArray();
-
-            Arrays.sort(chars);
-            for (int i = 0; i < chars.length - 1; i++)
+            if(s!="Valid License can not be generated")
             {
-                if (chars[i] == chars[i + 1])
-                {
-                    throw new Exception("Valid License can not be generated");
-                }
+                this.tradeLicenseId = s;
             }
+            else throw new Exception("Valid License can not be generated");
         }
-        else {
-            this.tradeLicenseId = tradeLicenseId;
+    }
+    public boolean validateLicenseIds(String permutation) throws Exception {
+        // Check if the trade license ID is valid
+        for (int i = 0; i < permutation.length() - 1; i++) {
+            if (permutation.charAt(i) ==permutation.charAt(i+1)) {
+                return false;    }
         }
+        return true;
+    }
+    public String rearrangeLicenseId() throws Exception {
+
+        List<String> permutations = new ArrayList<>();
+        permute(tradeLicenseId.toCharArray(), 0, permutations);
+         boolean b= false;
+        // Check each permutation to see if it is a valid license ID
+        for (String permutation : permutations) {
+
+              b = validateLicenseIds(permutation);
+                // If a valid permutation is found, return it
+            if(b==true)
+                return permutation;
+            else continue;
+            }
+           return "Valid License can not be generated";
 
     }
+        private void permute(char[] arr, int index, List<String> permutations)
+        {
+            if (index >= arr.length)
+            {
+                permutations.add(new String(arr));
+                return;
+            }
+
+            for (int i = index; i < arr.length; i++)
+            {
+                swap(arr, index, i);
+                permute(arr, index + 1, permutations);
+                swap(arr, index, i);
+            }
+        }
+        private void swap(char[] arr, int i, int j)
+        {
+            char temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+
     public String getTradeLicenseId() {
         return tradeLicenseId;
     }
 
 }
+ // if (!valid) {
+//
+//            char[] chars = tradeLicenseId.toCharArray();
+//
+//            Arrays.sort(chars);
+//            for (int i = 0; i < chars.length - 1; i++)
+//            {
+//                if (chars[i] == chars[i + 1])
+//                {
+//                    throw new Exception("Valid License can not be generated");
+//                }
+//            }
+//        }
+//        else {
+//            this.tradeLicenseId = tradeLicenseId;
+//        }
