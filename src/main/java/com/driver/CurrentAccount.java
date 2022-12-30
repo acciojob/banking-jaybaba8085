@@ -21,7 +21,6 @@ public class CurrentAccount extends BankAccount{
         // If the license Id is valid, do nothing
         // If the characters of the license Id can be rearranged to create any valid license Id
         // If it is not possible, throw "Valid License can not be generated" Exception
-
 //        boolean valid = true;
 //        for (int i = 0; i < tradeLicenseId.length() - 1; i++) {
 //            if (tradeLicenseId.charAt(i) == tradeLicenseId.charAt(i + 1)) {
@@ -45,27 +44,31 @@ public class CurrentAccount extends BankAccount{
 //        else {
 //            this.tradeLicenseId = tradeLicenseId;
 //        }
-
-
-        if (!isNumberValid(tradeLicenseId)) {
-            String newId = newLId(tradeLicenseId);
-            if(newId == ""){
+        if (!isNumberValid(tradeLicenseId)){
+            String rearrangedId = arrangeString(tradeLicenseId);
+            if(rearrangedId == ""){
                 throw new Exception("Valid License can not be generated");
             }
             else{
-                this.tradeLicenseId = newId;
+                this.tradeLicenseId = rearrangedId;
             }
         }
     }
-    public boolean isNumberValid(String licenseId){
-        for(int i = 0; i < licenseId.length()-1; i++){
-            if(licenseId.charAt(i) == licenseId.charAt(i+1)){
-                return false;
+
+    public char getCountChar(int[] count)
+    {
+        int max = 0;
+        char ch = 0;
+        for (int i = 0; i < 26; i++) {
+            if (count[i] > max) {
+                max = count[i];
+                ch = (char)((int)'A' + i);
             }
         }
-        return true;
+        return ch;
     }
-    public String newLId(String S)
+
+    public String arrangeString(String S)
     {
         int N = S.length();
 
@@ -77,15 +80,7 @@ public class CurrentAccount extends BankAccount{
             count[(int)ch - (int)'A']++;
         }
 
-        int max = 0;
-        char ch_max = 0;
-        for (int i = 0; i < 26; i++) {
-            if (count[i] > max) {
-                max = count[i];
-                ch_max = (char)((int)'A' + i);
-            }
-        }
-
+        char ch_max = getCountChar(count);
         int maxCount = count[(int)ch_max - (int)'A'];
 
         if (maxCount > (N + 1) / 2)
@@ -115,6 +110,15 @@ public class CurrentAccount extends BankAccount{
             }
         }
         return res;
+    }
+
+    public boolean isNumberValid(String licenseId){
+        for(int i = 0; i < licenseId.length()-1; i++){
+            if(licenseId.charAt(i) == licenseId.charAt(i+1)){
+                return false;
+            }
+        }
+        return true;
     }
 
     public String getTradeLicenseId() {
