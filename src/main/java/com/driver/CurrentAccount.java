@@ -20,15 +20,15 @@ public class CurrentAccount extends BankAccount{
         // If the characters of the license Id can be rearranged to create any valid license Id
         // If it is not possible, throw "Valid License can not be generated" Exception
         boolean valid = true;
-        for (int i = 0; i < getTradeLicenseId().length() - 1; i++) {
-            if (getTradeLicenseId().charAt(i) == getTradeLicenseId().charAt(i + 1)) {
+        for (int i = 0; i < tradeLicenseId.length() - 1; i++) {
+            if (tradeLicenseId.charAt(i) == tradeLicenseId.charAt(i + 1)) {
                 valid = false;
                 break;
             }
         }
         if (!valid) {
 
-            char[] chars = getTradeLicenseId().toCharArray();
+            char[] chars = tradeLicenseId.toCharArray();
 
             Arrays.sort(chars);
             for (int i = 0; i < chars.length - 1; i++)
