@@ -15,8 +15,16 @@ public class StudentAccount extends BankAccount{
     public String getInstitutionName() {
         return institutionName;
     }
+
+    public void setInstitutionName(String institutionName) {
+        this.institutionName = institutionName;
+    }
+
     public String getGetInstitutionName() {
         return getInstitutionName;
     }
 
+    public void setGetInstitutionName(String getInstitutionName) {
+        this.getInstitutionName = getInstitutionName;
+    }
 }
