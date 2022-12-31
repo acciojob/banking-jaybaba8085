@@ -1,5 +1,5 @@
 package com.driver;
-
+import  java.util.*;
 public class CurrentAccount extends BankAccount{
     String tradeLicenseId; //consists of Uppercase English characters only
 
@@ -17,15 +17,39 @@ public class CurrentAccount extends BankAccount{
         // If the license Id is valid, do nothing
         // If the characters of the license Id can be rearranged to create any valid license Id
         // If it is not possible, throw "Valid License can not be generated" Exception
-
-        if (!isNumberValid(tradeLicenseId)) {
-            String rearrangedId = arrangeString(tradeLicenseId);
-            if (rearrangedId == "") {
-                throw new Exception("Valid License can not be generated");
-            } else {
-                this.tradeLicenseId = rearrangedId;
+        boolean valid = true;
+        for (int i = 0; i < tradeLicenseId.length() - 1; i++) {
+            if (tradeLicenseId.charAt(i) == tradeLicenseId.charAt(i + 1)) {
+                valid = false;
+                break;
             }
         }
+        if (!valid)
+        {
+            String str=tradeLicenseId;
+            List<String> chars = Arrays.asList(str.split(""));
+            Collections.shuffle(chars);
+            boolean flag =true;
+            for (int i = 0; i < chars.size() - 1; i++)
+            {
+                if (chars.get(i) == chars.get(i+1)) {
+                    flag =false;
+                    throw new Exception("Valid License can not be generated");
+                }
+            }
+            if(flag=true)
+            {
+                this.tradeLicenseId = chars.toString();
+            }
+       }
+//        if (!isNumberValid(tradeLicenseId)) {
+//            String rearrangedId = arrangeString(tradeLicenseId);
+//            if (rearrangedId == "") {
+//                throw new Exception("Valid License can not be generated");
+//            } else {
+//                this.tradeLicenseId = rearrangedId;
+//            }
+//        }
     }
 
     public char getCountChar(int[] count) {
@@ -96,22 +120,3 @@ public class CurrentAccount extends BankAccount{
         return tradeLicenseId;
     }
 }
-
-//        boolean valid = true;
-//        for (int i = 0; i < tradeLicenseId.length() - 1; i++) {
-//            if (tradeLicenseId.charAt(i) == tradeLicenseId.charAt(i + 1)) {
-//                valid = false;
-//                break;
-//            }
-//        }
-//        if (!valid) {
-//
-//            char[] chars = tradeLicenseId.toCharArray();
-//
-//            Arrays.sort(chars);
-//            for (int i = 0; i < chars.length - 1; i++) {
-//                if (chars[i] == chars[i + 1]) {
-//                    throw new Exception("Valid License can not be generated");
-//                }
-//            }
-//       }
