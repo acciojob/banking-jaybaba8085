@@ -42,14 +42,25 @@ public class CurrentAccount extends BankAccount{
 //                this.tradeLicenseId = chars.toString();
 //            }
 //       }
-        if (!isNumberValid(tradeLicenseId)) {
-            String rearrangedId = arrangeString(tradeLicenseId);
-            if (rearrangedId == "") {
-                throw new Exception("Valid License can not be generated");
-            } else {
-                this.tradeLicenseId = rearrangedId;
+        boolean valid= true;
+        int n= tradeLicenseId.length();
+        for(int pos=1; pos<n; pos++){
+            char c= tradeLicenseId.charAt(pos);
+            if(c==tradeLicenseId.charAt(pos-1)){
+                valid= false;
+                break;
             }
         }
+        if(!valid) throw new Exception("Valid License can not be generated");
+
+//        if (!isNumberValid(tradeLicenseId)) {
+//            String rearrangedId = arrangeString(tradeLicenseId);
+//            if (rearrangedId == "") {
+//                throw new Exception("Valid License can not be generated");
+//            } else {
+//                this.tradeLicenseId = rearrangedId;
+//            }
+//        }
     }
 
     public char getCountChar(int[] count) {
